@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLog.Elmah", "NLog.Elmah.csproj", "{AE2191A9-BFA1-414A-A5BC-4DECF236E1C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLog.Elmah.Tests", "..\NLog.Elmah.Tests\NLog.Elmah.Tests.csproj", "{793C0518-52FC-4CDD-A6F2-6B04DA784EA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLog.Elmah.Example", "NLog.Elmah.Example\NLog.Elmah.Example.csproj", "{A41F7452-BBC7-43A4-ADE1-E0439EF6B515}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE2191A9-BFA1-414A-A5BC-4DECF236E1C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2191A9-BFA1-414A-A5BC-4DECF236E1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2191A9-BFA1-414A-A5BC-4DECF236E1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2191A9-BFA1-414A-A5BC-4DECF236E1C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{793C0518-52FC-4CDD-A6F2-6B04DA784EA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{793C0518-52FC-4CDD-A6F2-6B04DA784EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{793C0518-52FC-4CDD-A6F2-6B04DA784EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{793C0518-52FC-4CDD-A6F2-6B04DA784EA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A41F7452-BBC7-43A4-ADE1-E0439EF6B515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A41F7452-BBC7-43A4-ADE1-E0439EF6B515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A41F7452-BBC7-43A4-ADE1-E0439EF6B515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A41F7452-BBC7-43A4-ADE1-E0439EF6B515}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
