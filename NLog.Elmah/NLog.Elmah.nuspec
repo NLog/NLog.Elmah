@@ -7,7 +7,7 @@
 		<authors>NLog</authors>
 		<owners>NLog</owners>
 		<licenseUrl>https://github.com/NLog/NLog-Contrib/blob/master/LICENSE</licenseUrl>
-		<projectUrl>https://github.com/NLog/NLog-Contrib</projectUrl>
+		<projectUrl>https://github.com/NLog/NLog.Elmah</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Integrates NLog with ELMAH</description>
 		<releaseNotes>Community contributed custom target for NLog.</releaseNotes>
@@ -18,7 +18,4 @@
 		<dependency id="elmah.corelibrary" version="1.2.2" />
 	</dependencies>
 	</metadata>
-	<files>
-		<file src='bin\release\*.dll' target="lib\net35" />
-	</files>
 </package>
