@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>NLog.Elmah</id>
+		<version>$version$</version>
+		<title>NLog.Elmah</title>
+		<authors>NLog</authors>
+		<owners>NLog</owners>
+		<licenseUrl>https://github.com/NLog/NLog-Contrib/blob/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/NLog/NLog.Elmah</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Integrates NLog with ELMAH</description>
+		<releaseNotes>Community contributed custom target for NLog.</releaseNotes>
+		<copyright>Copyright 2013</copyright>
+		<tags>nlog target elmah</tags>
+		<dependencies>
+		<dependency id="NLog" version="3.2.0" />
+		<dependency id="elmah.corelibrary" version="1.2.2" />
+	</dependencies>
+	</metadata>
+</package>
