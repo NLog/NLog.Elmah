@@ -4,7 +4,7 @@
 		<id>NLog.Elmah</id>
 		<version>$version$</version>
 		<title>NLog.Elmah</title>
-		<authors>NLog</authors>
+		<authors>NLog, Todd Meinershagen</authors>
 		<owners>NLog</owners>
 		<licenseUrl>https://github.com/NLog/NLog-Contrib/blob/master/LICENSE</licenseUrl>
 		<projectUrl>https://github.com/NLog/NLog.Elmah</projectUrl>
