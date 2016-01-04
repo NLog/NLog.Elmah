@@ -1,4 +1,5 @@
 version: 2.0.{build}
+clone_folder: c:\projects\nlog
 configuration: Release
 platform: Any CPU
 assembly_info:
@@ -17,3 +18,9 @@ build:
   publish_nuget_symbols: true
   verbosity: normal
 deploy: off
+test_script:
+  - nuget.exe install OpenCover -ExcludeVersion
+  - OpenCover\tools\OpenCover.Console.exe -register:user -target:"nunit-console.exe" -targetargs:"c:\projects\nlog\NLog.Elmah.Tests\bin\Release\NLog.Elmah.Tests.dll -noshadow"  -returntargetcode -filter:"+[NLog.Elmah]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:coverage.xml
+  - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
+  - pip install codecov
+  - codecov -f "coverage.xml"
