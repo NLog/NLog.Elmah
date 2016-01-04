@@ -20,23 +20,40 @@ using NLog.Targets;
 
 namespace NLog.Elmah
 {
+    /// <summary>
+    /// Write messages to Elmah.
+    /// </summary>
 	[Target("Elmah")]
 	public sealed class ElmahTarget : TargetWithLayout
 	{
 		private readonly ErrorLog _errorLog;
 
+        /// <summary>
+        /// Use <see cref="LogEventInfo.Level"/> as type if <see cref="LogEventInfo.Exception"/> is <c>null</c>.
+        /// </summary>
 		public bool LogLevelAsType { get; set; }
 
+        /// <summary>
+        /// Target with default errorlog.
+        /// </summary>
 		public ElmahTarget()
 			: this(ErrorLog.GetDefault(null))
 		{ }
 
+        /// <summary>
+        /// Target with errorLog.
+        /// </summary>
+        /// <param name="errorLog"></param>
 		public ElmahTarget(ErrorLog errorLog)
 		{
 			_errorLog = errorLog;
 			LogLevelAsType = false;
 		}
 
+        /// <summary>
+        /// Write the event.
+        /// </summary>
+        /// <param name="logEvent">event to be written.</param>
 		protected override void Write(LogEventInfo logEvent)
 		{
 			var logMessage = Layout.Render(logEvent);
@@ -55,6 +72,9 @@ namespace NLog.Elmah
 			_errorLog.Log(error);
 		}
 
+        /// <summary>
+        /// Method for retrieving current date and time. If <c>null</c>, then <see cref="LogEventInfo.TimeStamp"/> will be used.
+        /// </summary>
 		public Func<DateTime> GetCurrentDateTime { get; set; }
 	}
 }
