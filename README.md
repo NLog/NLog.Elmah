@@ -1,5 +1,5 @@
 # NLog.Elmah
-[![Version](https://img.shields.io/nuget/v/NLog.ELMAH.svg)](https://www.nuget.org/packages/NLog.ELMAH)
+[![Version](https://badge.fury.io/nu/NLog.ELMAH.svg)](https://www.nuget.org/packages/NLog.ELMAH)
 [![AppVeyor](https://img.shields.io/appveyor/ci/nlog/nlog-Elmah/master.svg)](https://ci.appveyor.com/project/nlog/nlog-Elmah/branch/master)
 
 ELMAH target for NLog
