@@ -6,5 +6,5 @@ ELMAH target for NLog
 
 Extensions to [NLog](https://github.com/NLog/NLog/)
 
-##Notes
+## Notes
 Not strong named (SNK) because [the dependency](https://www.nuget.org/packages/elmah.corelibrary/) isn't strong named.   
