@@ -44,5 +44,9 @@ config:
 
 Check the internal log (c:\temp\nlog-interal.txt) in case of problems
 
+Also, users can [safely ignore the warning](https://stackoverflow.com/a/39311279/201303) it throws for that custom target:
+
+> `This is an invalid xsi:type 'http://www.nlog-project.org/schemas/NLog.xsd:Elmah'`
+
 ## Notes
 Not strong named (SNK) because [the dependency](https://www.nuget.org/packages/elmah.corelibrary/) isn't strong named.   
