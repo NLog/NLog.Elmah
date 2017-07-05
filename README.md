@@ -6,5 +6,43 @@ ELMAH target for NLog
 
 Extensions to [NLog](https://github.com/NLog/NLog/)
 
+# Usage
+
+Install the library with Nuget
+
+>  Install-Package NLog.Elmah 
+
+Update NLog to the latest version
+
+> Update-Package NLog
+
+Read the  [NLog tutorial](https://github.com/NLog/NLog/wiki/Tutorial)
+
+Example config:
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      internalLogFile="c:\temp\nlog-interal.txt" internalLogLevel="Info"
+      >
+
+    <targets>
+        <target name="target1" xsi:type="Elmah" LogLevelAsType"false"  />
+    </targets>
+
+    <rules>
+        <logger name="*" minlevel="Info" writeTo="target1" />
+    </rules>
+</nlog>
+
+```
+
+config:
+- `LogLevelAsType`: Use Level as type if logged Exception is `null`.
+
+
+Check the internal log (c:\temp\nlog-interal.txt) in case of problems
+
 ## Notes
 Not strong named (SNK) because [the dependency](https://www.nuget.org/packages/elmah.corelibrary/) isn't strong named.   
