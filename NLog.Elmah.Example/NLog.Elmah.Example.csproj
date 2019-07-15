@@ -7,7 +7,7 @@
     <Copyright>Copyright © Microsoft 2015</Copyright>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="NLog" Version="4.0.0" />
+    <PackageReference Include="NLog" Version="4.6.6" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Data.DataSetExtensions" />
