@@ -1,4 +1,4 @@
-﻿// Copyright 2013 Kim Christensen, Todd Meinershagen, et. al.
+// Copyright 2013 Kim Christensen, Todd Meinershagen, et. al.
 //  
 // Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 // this file except in compliance with the License. You may obtain a copy of the 
@@ -34,6 +34,16 @@ namespace NLog.Elmah
 		public bool LogLevelAsType { get; set; }
 
         /// <summary>
+        /// Use <see cref="LogEventInfo.LoggerName"/> as source if <see cref="LogEventInfo.Exception"/> is <c>null</c>.
+        /// </summary>
+        public bool LoggerNameAsSource { get; set; }
+
+        /// <summary>
+        /// Use <see cref="System.Security.Principal.IIdentity.Name"/> as user.
+        /// </summary>
+        public bool IdentityNameAsUser { get; set; }
+
+        /// <summary>
         /// Target with default errorlog.
         /// </summary>
 		public ElmahTarget()
@@ -48,6 +58,7 @@ namespace NLog.Elmah
 		{
 			_errorLog = errorLog;
 			LogLevelAsType = false;
+			LoggerNameAsSource = false;
 		}
 
         /// <summary>
@@ -68,6 +79,12 @@ namespace NLog.Elmah
 			error.Time = GetCurrentDateTime == null ? logEvent.TimeStamp : GetCurrentDateTime();
 			error.HostName = Environment.MachineName;
 			error.Detail = logEvent.Exception == null ? logMessage : logEvent.Exception.StackTrace;
+			error.Source = error.Exception != null
+				? error.Source
+				: LoggerNameAsSource ? logEvent.LoggerName : string.Empty;
+			error.User = IdentityNameAsUser
+				? httpContext?.User?.Identity?.Name ?? string.Empty
+				: string.Empty;
 
 			_errorLog.Log(error);
 		}

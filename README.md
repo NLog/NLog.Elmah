@@ -40,6 +40,8 @@ Example config:
 
 config:
 - `LogLevelAsType`: Use Level as type if logged Exception is `null`.
+- `LoggerNameAsSource`: Use LoggerName as source if logged Exception is `null`.
+- `IdentityNameAsUser`: Use Identity.Name as user.
 
 
 Check the internal log (c:\temp\nlog-interal.txt) in case of problems
