@@ -40,7 +40,7 @@ Example config:
 
 config:
 - `LogLevelAsType`: Use Level as type if logged Exception is `null`.
-- `LoggerNameAsSource`: Use LoggerName as source if logged Exception is `null`.
+- `Source`: This layout will be used for rendering the `Elmah.Source` Field. Default is `${exception:format=Source:whenEmpty=${logger}}`
 - `IdentityNameAsUser`: Use Identity.Name as user.
 
 

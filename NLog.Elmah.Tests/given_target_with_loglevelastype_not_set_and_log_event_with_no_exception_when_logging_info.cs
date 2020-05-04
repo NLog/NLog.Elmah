@@ -44,10 +44,10 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 		}
 
 		[Test]
-		public void should_not_set_source()
+		public void should_set_source()
 		{
 			var error = ErrorLog.GetFirstError();
-			Assert.That(error.Source, Is.Empty);
+			Assert.That(error.Source, Is.EqualTo("Test"));
 		}
 
         [Test]

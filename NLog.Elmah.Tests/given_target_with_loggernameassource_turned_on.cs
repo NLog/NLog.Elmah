@@ -21,7 +21,6 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 			var loggingConfiguration = new LoggingConfiguration();
 			var target = new ElmahTarget(ErrorLog)
 			{
-				LoggerNameAsSource = true,
 				Layout = new SimpleLayout("${level}-${message}"),
 				GetCurrentDateTime = () => Now
 			};

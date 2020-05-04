@@ -16,6 +16,7 @@ using System.Web;
 
 
 using Elmah;
+using NLog.Layouts;
 using NLog.Targets;
 
 namespace NLog.Elmah
@@ -36,7 +37,7 @@ namespace NLog.Elmah
         /// <summary>
         /// Use <see cref="LogEventInfo.LoggerName"/> as source if <see cref="LogEventInfo.Exception"/> is <c>null</c>.
         /// </summary>
-        public bool LoggerNameAsSource { get; set; }
+        public Layout Source { get; set; }
 
         /// <summary>
         /// Use <see cref="System.Security.Principal.IIdentity.Name"/> as user.
@@ -58,7 +59,7 @@ namespace NLog.Elmah
 		{
 			_errorLog = errorLog;
 			LogLevelAsType = false;
-			LoggerNameAsSource = false;
+            Source = "${exception:format=Source:whenEmpty=${logger}}";
 		}
 
         /// <summary>
@@ -79,9 +80,7 @@ namespace NLog.Elmah
 			error.Time = GetCurrentDateTime == null ? logEvent.TimeStamp : GetCurrentDateTime();
 			error.HostName = Environment.MachineName;
 			error.Detail = logEvent.Exception == null ? logMessage : logEvent.Exception.StackTrace;
-			error.Source = error.Exception != null
-				? error.Source
-				: LoggerNameAsSource ? logEvent.LoggerName : string.Empty;
+			error.Source = Source.Render(logEvent);
 			error.User = IdentityNameAsUser
 				? httpContext?.User?.Identity?.Name ?? string.Empty
 				: string.Empty;
