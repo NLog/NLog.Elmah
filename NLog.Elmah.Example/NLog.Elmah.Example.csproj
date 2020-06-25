@@ -5,7 +5,15 @@
     <Company>Microsoft</Company>
     <Product>NLog.Elmah.Example</Product>
     <Copyright>Copyright © Microsoft 2015</Copyright>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.0.0" />
   </ItemGroup>
