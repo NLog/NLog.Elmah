@@ -4,7 +4,7 @@ using System.Security.Principal;
 using System.Web;
 using NUnit.Framework;
 
-namespace NLog.Elmah.Tests.ElmahTargetTests
+namespace NLog.Elmah.Tests
 {
 	[TestFixture]
 	public class given_target_with_identitynameasuser_turned_on_log_event_with_exception_when_logging_error : given_target_with_identitynameasuser_turned_on

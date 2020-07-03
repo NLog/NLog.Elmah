@@ -1,8 +1,7 @@
 ﻿using System;
-
 using NUnit.Framework;
 
-namespace NLog.Elmah.Tests.ElmahTargetTests
+namespace NLog.Elmah.Tests
 {
 	[TestFixture]
 	public class given_target_with_loglevelastype_not_set_and_log_event_with_no_exception_when_logging_info : given_target_with_loglevelastype_not_set

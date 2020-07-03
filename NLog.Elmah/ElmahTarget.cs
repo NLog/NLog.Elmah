@@ -25,9 +25,9 @@ namespace NLog.Elmah
     /// Write messages to Elmah.
     /// </summary>
 	[Target("Elmah")]
-	public sealed class ElmahTarget : TargetWithLayout
-	{
-		private readonly ErrorLog _errorLog;
+    public sealed class ElmahTarget : TargetWithLayout
+    {
+        private readonly ErrorLog _errorLog;
 
         /// <summary>
         /// Use <see cref="LogEventInfo.Level"/> as type if <see cref="LogEventInfo.Exception"/> is <c>null</c>.
@@ -45,52 +45,78 @@ namespace NLog.Elmah
         public bool IdentityNameAsUser { get; set; }
 
         /// <summary>
-        /// Target with default errorlog.
+        /// Target with default error log.
         /// </summary>
 		public ElmahTarget()
-			: this(ErrorLog.GetDefault(null))
-		{ }
+            : this(ErrorLog.GetDefault(null))
+        { }
 
         /// <summary>
         /// Target with errorLog.
         /// </summary>
         /// <param name="errorLog"></param>
 		public ElmahTarget(ErrorLog errorLog)
-		{
-			_errorLog = errorLog;
-			LogLevelAsType = false;
+        {
+            _errorLog = errorLog;
+            LogLevelAsType = false;
             Source = "${exception:format=Source:whenEmpty=${logger}}";
-		}
+        }
+
+        /// <summary>
+        /// Method for retrieving current date and time. If <c>null</c>, then <see cref="LogEventInfo.TimeStamp"/> will be used.
+        /// </summary>
+        public Func<DateTime> GetCurrentDateTime { get; set; }
 
         /// <summary>
         /// Write the event.
         /// </summary>
         /// <param name="logEvent">event to be written.</param>
 		protected override void Write(LogEventInfo logEvent)
-		{
-			var logMessage = Layout.Render(logEvent);
+        {
+            var logMessage = Layout.Render(logEvent);
 
-			var httpContext = HttpContext.Current;
-			var error = logEvent.Exception == null ? new Error() : httpContext != null ? new Error(logEvent.Exception, httpContext) : new Error(logEvent.Exception);
-			var type = error.Exception != null
-						   ? error.Exception.GetType().FullName
-						   : LogLevelAsType ? logEvent.Level.Name : string.Empty;
-			error.Type = type;
-			error.Message = logMessage;
-			error.Time = GetCurrentDateTime == null ? logEvent.TimeStamp : GetCurrentDateTime();
-			error.HostName = Environment.MachineName;
-			error.Detail = logEvent.Exception == null ? logMessage : logEvent.Exception.StackTrace;
-			error.Source = Source.Render(logEvent);
-			error.User = IdentityNameAsUser
-				? httpContext?.User?.Identity?.Name ?? string.Empty
-				: string.Empty;
+            var httpContext = HttpContext.Current;
+            var error = CreateError(logEvent, httpContext);
+            error.Type = GetType(logEvent, error);
+            error.Message = logMessage;
+            error.Time = GetCurrentDateTime?.Invoke() ?? logEvent.TimeStamp;
+            error.HostName = Environment.MachineName;
+            error.Detail = logEvent.Exception == null ? logMessage : logEvent.Exception.StackTrace;
+            error.Source = Source.Render(logEvent);
+            error.User = GetUser(httpContext);
 
-			_errorLog.Log(error);
-		}
+            _errorLog.Log(error);
+        }
 
-        /// <summary>
-        /// Method for retrieving current date and time. If <c>null</c>, then <see cref="LogEventInfo.TimeStamp"/> will be used.
-        /// </summary>
-		public Func<DateTime> GetCurrentDateTime { get; set; }
-	}
+        private string GetType(LogEventInfo logEvent, Error error)
+        {
+            return error.Exception != null
+                ? error.Exception.GetType().FullName
+                : LogLevelAsType ? logEvent.Level.Name : string.Empty;
+        }
+
+        private static Error CreateError(LogEventInfo logEvent, HttpContext httpContext)
+        {
+            if (logEvent.Exception == null)
+            {
+                return new Error();
+            }
+
+            if (httpContext != null)
+            {
+                return new Error(logEvent.Exception, httpContext);
+            }
+
+            return new Error(logEvent.Exception);
+        }
+
+        private string GetUser(HttpContext httpContext)
+        {
+            return IdentityNameAsUser
+                ? httpContext?.User?.Identity?.Name ?? string.Empty
+                : string.Empty;
+        }
+
+
+    }
 }

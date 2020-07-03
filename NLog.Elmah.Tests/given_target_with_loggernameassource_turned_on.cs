@@ -1,13 +1,10 @@
 ﻿using System;
-
 using Elmah;
-
 using NLog.Config;
 using NLog.Layouts;
-
 using NUnit.Framework;
 
-namespace NLog.Elmah.Tests.ElmahTargetTests
+namespace NLog.Elmah.Tests
 {
 	public abstract class given_target_with_loggernameassource_turned_on
 	{

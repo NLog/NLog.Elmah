@@ -1,8 +1,7 @@
 using System;
-
 using NUnit.Framework;
 
-namespace NLog.Elmah.Tests.ElmahTargetTests
+namespace NLog.Elmah.Tests
 {
 	[TestFixture]
 	public class given_target_with_loglevelastype_not_set_log_event_with_exception_when_logging_error : given_target_with_loglevelastype_not_set
@@ -23,7 +22,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 			}
 			catch (Exception ex)
 			{
-				logger.ErrorException("This is an error message.", ex);
+				logger.Error(ex, "This is an error message.");
 			}
             
 		}

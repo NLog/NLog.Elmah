@@ -15,25 +15,25 @@ using System;
 
 namespace NLog.Elmah.Example
 {
-	class Program
-	{
-		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    class Program
+    {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-		static void Main(string[] args)
-		{
-			Logger.ErrorException("This is a message from the Program type.", new ArgumentException());
-			var service = new Service();
-			service.Execute();
-		}
-	}
+        static void Main(string[] args)
+        {
+            Logger.Error(new ArgumentException(), "This is a message from the Program type.");
+            var service = new Service();
+            service.Execute();
+        }
+    }
 
-	public class Service
-	{
-		private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    public class Service
+    {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-		public void Execute()
-		{
-			Logger.Info("This is a message from the Service type.");
-		}
-	}
+        public void Execute()
+        {
+            Logger.Info("This is a message from the Service type.");
+        }
+    }
 }
