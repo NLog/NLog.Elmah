@@ -71,6 +71,13 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 			Assert.That(error.Source, Is.EqualTo(_exception.Source));
 		}
 
+        [Test]
+        public void should_not_set_user()
+        {
+            var error = ErrorLog.GetFirstError();
+            Assert.That(error.User, Is.Empty);
+        }
+
 		[Test]
 		public void should_set_time_to_now()
 		{
