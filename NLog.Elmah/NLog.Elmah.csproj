@@ -34,7 +34,7 @@
 
   <ItemGroup>
     <PackageReference Include="elmah.corelibrary" Version="1.2.2" />
-    <PackageReference Include="NLog" Version="4.6.7" />
+    <PackageReference Include="NLog" Version="4.7.10" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web" />
