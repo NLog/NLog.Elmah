@@ -43,6 +43,7 @@ Example config:
 ## Options
 - **Layout** - Used for rendering the `Elmah.Message`. Default is `${message}`
 - **LogType** - Layout for rendering the `Elmah.Type` Field. Default is `${exception:format=Type:whenEmpty=${level}}`
+  > Introduced with NLog.Elmah v4.1 and replaces obsolete `LogLevelAsType`
 - **LogSource** - Layout for rendering the `Elmah.Source` Field. Default is `${exception:format=Source:whenEmpty=${logger}}`
 - **LogDetail** - Layout for rendering the `Elmah.Detail` Field. Default is `${exception:format=ToString}`
 - **LogHostName** - Layout for rendering the `Elmah.HostName` Field. Default is `${hostname}`
