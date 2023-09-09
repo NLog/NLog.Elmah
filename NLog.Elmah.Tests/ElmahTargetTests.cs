@@ -38,7 +38,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 		{
 			HttpContext.Current = GetContext();
 			var exception = new ArgumentException { Source = "SetUp" };
-			_logger.ErrorException("This is an error message.", exception);
+			_logger.Error(exception, "This is an error message.");
 
 			var error = ErrorLog.GetFirstError();
 			Assert.That(error.ServerVariables, Is.Not.Empty);
@@ -50,7 +50,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 			HttpContext.Current = null;
 
 			var exception = new ArgumentException { Source = "SetUp" };
-			_logger.ErrorException("This is an error message.", exception);
+			_logger.Error(exception, "This is an error message.");
 
 			var error = ErrorLog.GetFirstError();
 			Assert.That(error.ServerVariables, Is.Empty);
@@ -61,7 +61,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 			const string appVirtualDir = "/";
 			const string appPhysicalDir = @"c:\\projects\\SubtextSystem\\Subtext.Web\\";
 			const string page = "application/default.aspx";
-			_host = Environment.MachineName;
+			_host = Environment.MachineName.ToUpperInvariant();
 			var query = string.Empty;
 			TextWriter output = null;
 

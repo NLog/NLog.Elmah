@@ -24,31 +24,26 @@ Example config:
 <?xml version="1.0" encoding="utf-8" ?>
 <nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      internalLogFile="c:\temp\nlog-interal.txt" internalLogLevel="Info"
-      >
+      throwConfigExceptions="true">
 
     <targets>
-        <target name="target1" xsi:type="Elmah" LogLevelAsType"false"  />
+        <target name="target1" type="Elmah" />
     </targets>
 
     <rules>
         <logger name="*" minlevel="Info" writeTo="target1" />
     </rules>
 </nlog>
-
 ```
 
-config:
-- `LogLevelAsType`: Use Level as type if logged Exception is `null`.
-- `Source`: This layout will be used for rendering the `Elmah.Source` Field. Default is `${exception:format=Source:whenEmpty=${logger}}`
-- `IdentityNameAsUser`: Use Identity.Name as user.
-
-
-Check the internal log (c:\temp\nlog-interal.txt) in case of problems
-
-Also, users can [safely ignore the warning](https://stackoverflow.com/a/39311279/201303) it throws for that custom target:
-
-> `This is an invalid xsi:type 'http://www.nlog-project.org/schemas/NLog.xsd:Elmah'`
+## Options
+- **Layout** - Used for rendering the `Elmah.Message`. Default is `${message}`
+- **LogType** - Layout for rendering the `Elmah.Type` Field. Default is `${exception:format=Type:whenEmpty=${level}}`
+- **LogSource** - Layout for rendering the `Elmah.Source` Field. Default is `${exception:format=Source:whenEmpty=${logger}}`
+- **LogDetail** - Layout for rendering the `Elmah.Detail` Field. Default is `${exception:format=ToString}`
+- **LogHostName** - Layout for rendering the `Elmah.HostName` Field. Default is `${hostname}`
+- **LogUser** - Layout for rendering the `Elmah.User` Field. Default is blank.
+- **IdentityNameAsUser** - Use HttpContext.User as fallback when `LogUser` gives blank value. Default is `false`
 
 ## Notes
 Not strong named (SNK) because [the dependency](https://www.nuget.org/packages/elmah.corelibrary/) isn't strong named.   

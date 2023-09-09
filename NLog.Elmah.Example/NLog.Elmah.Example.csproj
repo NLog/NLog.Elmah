@@ -5,9 +5,7 @@
     <Company>Microsoft</Company>
     <Product>NLog.Elmah.Example</Product>
     <Copyright>Copyright © Microsoft 2015</Copyright>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

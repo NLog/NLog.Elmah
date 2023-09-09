@@ -14,14 +14,15 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 		protected ErrorLog ErrorLog;
 		protected readonly DateTime Now = new DateTime(2013, 10, 8, 19, 5, 0);
 
-		[TestFixtureSetUp]
+		[OneTimeSetUpAttribute]
 		public void Init()
 		{
+			LogManager.ThrowExceptions = true;
+
 			ErrorLog = new MemoryErrorLog(1);
 			var loggingConfiguration = new LoggingConfiguration();
 			var target = new ElmahTarget(ErrorLog)
 			{
-				LogLevelAsType = true,
 				Layout = new SimpleLayout("${level}-${message}"),
 				GetCurrentDateTime = () => Now
 			};

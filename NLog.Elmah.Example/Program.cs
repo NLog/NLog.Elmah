@@ -21,7 +21,7 @@ namespace NLog.Elmah.Example
 
 		static void Main(string[] args)
 		{
-			Logger.ErrorException("This is a message from the Program type.", new ArgumentException());
+			Logger.Error(new ArgumentException(), "This is a message from the Program type.");
 			var service = new Service();
 			service.Execute();
 		}
