@@ -12,6 +12,8 @@ dotnet_csproj:
   informational_version: '4.1.0'
   version: '4.1.0'
 skip_tags: true
+nuget:
+  disable_publish_on_pr: true
 build_script:
   - ps: dotnet restore
   - ps: msbuild /t:build,pack /p:Configuration=Release /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /p:ContinuousIntegrationBuild=true /p:EmbedUntrackedSources=true /p:PublishRepositoryUrl=true /verbosity:minimal
@@ -24,3 +26,9 @@ test_script:
 artifacts:
   - path: '**\NLog.*.nupkg'
   - path: '**\NLog.*.snupkg'
+deploy:
+- provider: NuGet
+  api_key:
+    secure: e+0IpLU3V1eXUsWCRjKGuyyeuLQYfFpv6BAoIihFQryuYZsOWVvxUBvQOC0dOL2n
+  on:
+    branch: master
