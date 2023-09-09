@@ -14,7 +14,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 		protected ErrorLog ErrorLog;
 		protected readonly DateTime Now = new DateTime(2013, 10, 8, 19, 5, 0);
 
-		[TestFixtureSetUp]
+		[OneTimeSetUpAttribute]
 		public void Init()
 		{
 			ErrorLog = new MemoryErrorLog(1);

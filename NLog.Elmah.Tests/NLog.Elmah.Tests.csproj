@@ -5,10 +5,13 @@
     <Company>NLog</Company>
     <Product>NLog.Elmah.Tests</Product>
     <Copyright>Copyright © NLog</Copyright>
+    <IsPackable>false</IsPackable>
+    <DebugType>full</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="elmah.corelibrary" Version="1.2.2" />
-    <PackageReference Include="NUnit" Version="2.6.4" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web" />

@@ -23,7 +23,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 			}
 			catch (Exception ex)
 			{
-				logger.ErrorException("This is an error message.", ex);
+				logger.Error(ex, "This is an error message.");
 			}
             
 		}
@@ -61,7 +61,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 		public void should_set_detail_to_stack_trace()
 		{
 			var error = ErrorLog.GetFirstError();
-			Assert.That(error.Detail, Is.EqualTo(_exception.StackTrace));
+			Assert.That(error.Detail, Is.EqualTo(_exception.ToString()));
 		}
 
 		[Test]
@@ -89,7 +89,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 		public void should_set_host_name_to_machine_name()
 		{
 			var error = ErrorLog.GetFirstError();
-			Assert.That(error.HostName, Is.EqualTo(Environment.MachineName));
+			Assert.That(error.HostName.ToUpperInvariant(), Is.EqualTo(Environment.MachineName.ToUpperInvariant()));
 		}
 	}
 }

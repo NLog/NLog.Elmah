@@ -1,43 +1,55 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net35</TargetFramework>
-    <AssemblyTitle>NLog.Elmah</AssemblyTitle>
+    <Title>NLog.Elmah</Title>
     <Company>NLog</Company>
     <Product>NLog.Elmah</Product>
     <Description>Integrates NLog with ELMAH</Description>
     <Copyright>Copyright 2013-2019</Copyright>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Authors>NLog, Todd Meinershagen, Julian Verdurmen</Authors>
-    <PackageIconUrl>https://nlog-project.org/N.png</PackageIconUrl>
-    <PackageId>NLog.Elmah</PackageId>
-    <PackageLicenseUrl>https://github.com/NLog/NLog-Contrib/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/NLog/NLog.Elmah</PackageProjectUrl>
-    <PackageReleaseNotes>
-
-    </PackageReleaseNotes>
-    <PackageTags>nlog target elmah</PackageTags>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>4.0</Version>
-    <RepositoryUrl>https://github.com/NLog/NLog.Elmah.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/NLog/NLog.Elmah.git</RepositoryUrl>
+    <PackageId>NLog.Elmah</PackageId>
+    <PackageTags>nlog target elmah</PackageTags>
+    <PackageProjectUrl>https://github.com/NLog/NLog.Elmah</PackageProjectUrl>
+    <PackageIcon>N.png</PackageIcon>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReleaseNotes>
+- Added option LogSource (#29) (@XF9)
+- Added option IdentityNameAsUser (#29) (@XF9)
+- Added option LogType
+- Added option LogDetail
+- Added option LogHostName
+- Updated dependency NLog v4.7.15
+- Enabled SourceLink (#30) (@JTOne123)
+- Updated the csproj format (#24) (@304NotModified)
+    </PackageReleaseNotes>
+
+    <IsPackable>true</IsPackable>
+    <DebugType>full</DebugType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <Version>4.0</Version>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <FileVersion>4.0.0.0</FileVersion>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="elmah.corelibrary" Version="1.2.2" />
-    <PackageReference Include="NLog" Version="4.6.7" />
+    <PackageReference Include="NLog" Version="4.7.15" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
+
+  <Target Name="DownloadMissingContent" BeforeTargets="GenerateNuspec">
+    <DownloadFile SourceUrl="https://nlog-project.org/N.png" DestinationFolder="$(MSBuildThisFileDirectory)" />
+  </Target>
   <ItemGroup>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <None Include="N.png" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>
 </Project>

@@ -33,7 +33,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 		public void should_set_log_type_to_empty_string()
 		{
 			var error = ErrorLog.GetFirstError();
-			Assert.That(error.Type, Is.Empty);
+			Assert.That(error.Type, Is.EqualTo("Info"));
 		}
 
 		[Test]
@@ -68,7 +68,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
 		public void should_set_host_name_to_machine_name()
 		{
 			var error = ErrorLog.GetFirstError();
-			Assert.That(error.HostName, Is.EqualTo(Environment.MachineName));
+			Assert.That(error.HostName.ToUpperInvariant(), Is.EqualTo(Environment.MachineName.ToUpperInvariant()));
 		}
 	}
 }

@@ -13,8 +13,6 @@
 
 using System;
 using System.Web;
-
-
 using Elmah;
 using NLog.Layouts;
 using NLog.Targets;
@@ -24,73 +22,117 @@ namespace NLog.Elmah
     /// <summary>
     /// Write messages to Elmah.
     /// </summary>
-	[Target("Elmah")]
-	public sealed class ElmahTarget : TargetWithLayout
-	{
-		private readonly ErrorLog _errorLog;
+    [Target("Elmah")]
+    public sealed class ElmahTarget : TargetWithLayout
+    {
+        private readonly ErrorLog _errorLog;
 
         /// <summary>
         /// Use <see cref="LogEventInfo.Level"/> as type if <see cref="LogEventInfo.Exception"/> is <c>null</c>.
         /// </summary>
-		public bool LogLevelAsType { get; set; }
+        [Obsolete("Instead configure LogType Layout Property")]
+        public bool LogLevelAsType { get; set; }
 
         /// <summary>
-        /// Use <see cref="LogEventInfo.LoggerName"/> as source if <see cref="LogEventInfo.Exception"/> is <c>null</c>.
+        /// Override <see cref="Error.Type"/>
         /// </summary>
-        public Layout Source { get; set; }
+        /// <remarks>
+        /// Default: ${exception:format=Type:whenEmpty=${level}}
+        /// </remarks>
+        public Layout LogType { get; set; }
 
         /// <summary>
-        /// Use <see cref="System.Security.Principal.IIdentity.Name"/> as user.
+        /// Override <see cref="Error.Source"/>
+        /// </summary>
+        /// <remarks>
+        /// Default: ${exception:format=Source:whenEmpty=${logger}}
+        /// </remarks>
+        public Layout LogSource { get; set; }
+
+        /// <summary>
+        /// Override <see cref="Error.Detail"/>
+        /// </summary>
+        /// <remarks>
+        /// Default: ${exception:format=ToString}
+        /// </remarks>
+        public Layout LogDetail { get; set; }
+
+        /// <summary>
+        /// Override <see cref="Error.HostName"/>
+        /// </summary>
+        /// <remarks>
+        /// Default: ${hostname}
+        /// </remarks>
+        public Layout LogHostName { get; set; }
+
+        /// <summary>
+        /// Override <see cref="Error.User"/>
+        /// </summary>
+        /// <remarks>
+        /// Fallback to HttpContext.Current.User when <see cref="IdentityNameAsUser"/> = true
+        /// </remarks>
+        public Layout LogUser { get; set; }
+
+        /// <summary>
+        /// Use <see cref="System.Security.Principal.IIdentity.Name"/> from HttpContext as user.
         /// </summary>
         public bool IdentityNameAsUser { get; set; }
 
         /// <summary>
         /// Target with default errorlog.
         /// </summary>
-		public ElmahTarget()
-			: this(ErrorLog.GetDefault(null))
-		{ }
+        public ElmahTarget()
+            : this(ErrorLog.GetDefault(null))
+        { }
 
         /// <summary>
         /// Target with errorLog.
         /// </summary>
         /// <param name="errorLog"></param>
-		public ElmahTarget(ErrorLog errorLog)
-		{
-			_errorLog = errorLog;
-			LogLevelAsType = false;
-            Source = "${exception:format=Source:whenEmpty=${logger}}";
-		}
+        public ElmahTarget(ErrorLog errorLog)
+        {
+            _errorLog = errorLog;
+            Layout = "${message}${onexception: - ${exception:format=Message}}";
+            LogSource = "${exception:format=Source:whenEmpty=${logger}}";
+            LogType = "${exception:format=Type:whenEmpty=${level}}";
+            LogDetail = "${exception:format=ToString}";
+            LogHostName = "${hostname}";
+        }
 
         /// <summary>
         /// Write the event.
         /// </summary>
         /// <param name="logEvent">event to be written.</param>
-		protected override void Write(LogEventInfo logEvent)
-		{
-			var logMessage = Layout.Render(logEvent);
+        protected override void Write(LogEventInfo logEvent)
+        {
+            var logMessage = RenderLogEvent(Layout, logEvent);
+            var logType = RenderLogEvent(LogType, logEvent);
+            var logSource = RenderLogEvent(LogSource, logEvent);
+            var logDetail = RenderLogEvent(LogDetail, logEvent);
+            if (string.IsNullOrEmpty(logDetail))
+                logDetail = logMessage;
+            var logHostName = RenderLogEvent(LogHostName, logEvent);
+            var logUser = RenderLogEvent(LogUser, logEvent);
 
-			var httpContext = HttpContext.Current;
-			var error = logEvent.Exception == null ? new Error() : httpContext != null ? new Error(logEvent.Exception, httpContext) : new Error(logEvent.Exception);
-			var type = error.Exception != null
-						   ? error.Exception.GetType().FullName
-						   : LogLevelAsType ? logEvent.Level.Name : string.Empty;
-			error.Type = type;
-			error.Message = logMessage;
-			error.Time = GetCurrentDateTime == null ? logEvent.TimeStamp : GetCurrentDateTime();
-			error.HostName = Environment.MachineName;
-			error.Detail = logEvent.Exception == null ? logMessage : logEvent.Exception.StackTrace;
-			error.Source = Source.Render(logEvent);
-			error.User = IdentityNameAsUser
-				? httpContext?.User?.Identity?.Name ?? string.Empty
-				: string.Empty;
+            var httpContext = HttpContext.Current;
+            if (string.IsNullOrEmpty(logUser) && IdentityNameAsUser)
+                logUser = httpContext?.User?.Identity?.Name;
 
-			_errorLog.Log(error);
-		}
+            var error = logEvent.Exception == null ? new Error() : httpContext != null ? new Error(logEvent.Exception, httpContext) : new Error(logEvent.Exception);
+            error.Type = logType;
+            error.Message = logMessage;
+            error.Time = GetCurrentDateTime == null ? logEvent.TimeStamp : GetCurrentDateTime();
+            error.HostName = logHostName;
+            error.Detail = logDetail;
+            error.Source = logSource;
+            if (!string.IsNullOrEmpty(logUser))
+                error.User = logUser;
+            _errorLog.Log(error);
+        }
 
         /// <summary>
         /// Method for retrieving current date and time. If <c>null</c>, then <see cref="LogEventInfo.TimeStamp"/> will be used.
         /// </summary>
-		public Func<DateTime> GetCurrentDateTime { get; set; }
-	}
+        public Func<DateTime> GetCurrentDateTime { get; set; }
+    }
 }

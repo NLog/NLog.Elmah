@@ -25,7 +25,7 @@ namespace NLog.Elmah.Tests.ElmahTargetTests
             const string appVirtualDir = "/";
             const string appPhysicalDir = @"c:\\projects\\SubtextSystem\\Subtext.Web\\";
             const string page = "application/default.aspx";
-            _host = Environment.MachineName;
+            _host = Environment.MachineName.ToUpperInvariant();
             var query = string.Empty;
             TextWriter output = null;
 

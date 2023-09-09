@@ -1,5 +1,5 @@
 version: 4.0.0.{build}
-image: Visual Studio 2019
+image: Visual Studio 2022
 clone_folder: c:\projects\nlog
 configuration: Release
 platform: Any CPU
@@ -12,11 +12,12 @@ dotnet_csproj:
   informational_version: '4.1.0'
   version: '4.1.0'
 skip_tags: true
-build_script:	
-  - ps: msbuild /t:restore,build /p:Configuration=Release /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /maxcpucount /v:m
+build_script:
+  - ps: dotnet restore
+  - ps: msbuild /t:build,pack /p:Configuration=Release /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /p:ContinuousIntegrationBuild=true /p:EmbedUntrackedSources=true /p:PublishRepositoryUrl=true /verbosity:minimal
 test_script:
   - nuget.exe install OpenCover -ExcludeVersion
-  - OpenCover\tools\OpenCover.Console.exe -register:user -target:"nunit-console.exe" -targetargs:"c:\projects\nlog\NLog.Elmah.Tests\bin\Release\net35\NLog.Elmah.Tests.dll -noshadow"  -returntargetcode -filter:"+[NLog.Elmah]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:coverage.xml
+  - OpenCover\tools\OpenCover.Console.exe -register:user -target:"nunit3-console.exe" -targetargs:"c:\projects\nlog\NLog.Elmah.Tests\bin\Release\net35\NLog.Elmah.Tests.dll"  -returntargetcode -filter:"+[NLog.Elmah]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:coverage.xml
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov
   - codecov -f "coverage.xml"
