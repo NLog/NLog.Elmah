@@ -26,6 +26,10 @@ Example config:
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       throwConfigExceptions="true">
 
+    <extensions>
+        <add assembly="NLog.Elmah" />
+    </extensions>
+
     <targets>
         <target name="target1" type="Elmah" />
     </targets>
