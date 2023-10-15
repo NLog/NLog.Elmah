@@ -23,6 +23,8 @@
 - Updated dependency NLog v4.7.15
 - Enabled SourceLink (#30) (@JTOne123)
 - Updated the csproj format (#24) (@304NotModified)
+
+See https://github.com/NLog/NLog.Elmah for documentation of Elmah Target
     </PackageReleaseNotes>
 
     <IsPackable>true</IsPackable>
